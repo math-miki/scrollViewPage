@@ -109,6 +109,9 @@
     where = 2;
     bgScrollView.contentOffset = CGPointMake(viewSize.width, 0);
     //=======================UISwipeGestureRecognizer=======================//
+    //=======================Swipeする範囲の透明なViewを生成す=======================//
+    UIView* swipeView = [[UIView alloc] initWithFrame:CGRectMake(0, height + length, viewSize.width, viewSize.height - height - length)];
+    swipeView.backgroundColor = [UIColor clearColor];
     UISwipeGestureRecognizer* leftSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleOfLeft:)];
     leftSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
     leftSwipe.delegate = self;
@@ -116,7 +119,8 @@
     UISwipeGestureRecognizer* rightSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleOfRight:)];
     rightSwipe.direction = UISwipeGestureRecognizerDirectionRight;
     rightSwipe.delegate = self;
-    [self.view addGestureRecognizer:rightSwipe];
+    [swipeView addGestureRecognizer:rightSwipe];
+    [self.view addSubview:swipeView];
 }
 
 - (void)setAndFireTimer {
