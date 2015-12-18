@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TutrialViewController : UIViewController{
+@interface TutrialViewController : UIViewController<UIGestureRecognizerDelegate>{
     UIScrollView* scrollView;
     UIScrollView* bgScrollView;
     NSTimer* timer;

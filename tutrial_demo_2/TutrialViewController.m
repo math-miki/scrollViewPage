@@ -89,12 +89,12 @@
     closeButton.frame = CGRectMake(viewSize.width - width, height, length, length);
     [closeButton setImage:[UIImage imageNamed:@"close.png"] forState:UIControlStateNormal];
     [closeButton setImage:[UIImage imageNamed:@"close.png"] forState:UIControlStateFocused];
-    [closeButton addTarget:self action:@selector(close:) forControlEvents:UIControlEventTouchUpInside];
+    [closeButton addTarget:self action:@selector(closeTutrial:) forControlEvents:UIControlEventTouchUpInside];
     //=======================下に表示するLabelの作成=======================//
     UILabel* label = [[UILabel alloc] init];
     float top = iPoneImageView.frame.origin.y + iPoneImageView.frame.size.height;
     label.frame = CGRectMake(0, top, viewSize.width, self.view.frame.size.height - top);
-    label.text = @"あいうえおかきくけこ\nさしすせそたちつてと";
+    label.text = @"左右のおじさんの部屋を\n覗いてあげてね";
     label.numberOfLines = 2;
     label.textAlignment = UITextAlignmentCenter;
     
@@ -108,44 +108,72 @@
     scrollView.contentOffset = CGPointMake(190, 0);
     where = 2;
     bgScrollView.contentOffset = CGPointMake(viewSize.width, 0);
+    //=======================UISwipeGestureRecognizer=======================//
+    UISwipeGestureRecognizer* leftSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleOfLeft:)];
+    leftSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
+    leftSwipe.delegate = self;
+    [self.view addGestureRecognizer:leftSwipe];
+    UISwipeGestureRecognizer* rightSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleOfRight:)];
+    rightSwipe.direction = UISwipeGestureRecognizerDirectionRight;
+    rightSwipe.delegate = self;
+    [self.view addGestureRecognizer:rightSwipe];
 }
 
 - (void)setAndFireTimer {
-    timer = [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(selectorOfTimer:) userInfo:Nil repeats:YES];
-}
-- (void)leftToRight {
-    if(where == 3) {
-        [scrollView setContentOffset:CGPointMake(190, 0) animated:YES];
-        [bgScrollView setContentOffset:CGPointMake(self.view.frame.size.width, 0) animated:YES];
-        where = 2;
-    }else if(where == 2) {
-        [scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
-        [bgScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
-        where = 1;
-    }
+    timer = [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(selectorOfTimer:) userInfo:Nil repeats:NO];
 }
 
-- (void)close:(UIButton*)sender {
+- (void)closeTutrial:(UIButton*)sender {
     NSLog(@"close");
 }
 
 
 - (void)selectorOfTimer:(NSTimer*)timer {
-    
+    NSLog(@"timer");
+    NSLog(@"%d",count);
+    if (count % 4 == 0) {
+        [self leftToRight];
+    } else if (count % 4 == 1) {
+        [self rightToleft];
+    } else if (count % 4 == 2) {
+        [self rightToleft];
+    } else {
+        [self leftToRight];
+    }
 }
+
+- (void)leftToRight {
+    if(where == 3) {
+        [scrollView setContentOffset:CGPointMake(190, 0) animated:YES];
+        [bgScrollView setContentOffset:CGPointMake(self.view.frame.size.width, 0) animated:YES];
+        where = 2;
+        count = 0;
+    }else if(where == 2) {
+        [scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+        [bgScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+        where = 1;
+        count = 1;
+    }
+    [timer invalidate];
+    [self setAndFireTimer];
+}
+
 
 - (void)rightToleft {
     if(where == 2) {
         [scrollView setContentOffset:CGPointMake(380,0) animated:YES];
         [bgScrollView setContentOffset:CGPointMake(self.view.frame.size.width * 2, 0) animated:YES];
         where = 3;
+        count = 3;
     } else if (where == 1) {
         [scrollView setContentOffset:CGPointMake(190, 0) animated:YES];
         [bgScrollView setContentOffset:CGPointMake(self.view.frame.size.width, 0) animated:YES];
         where = 2;
+        count = 2;
     }
+    [timer invalidate];
+    [self setAndFireTimer];
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

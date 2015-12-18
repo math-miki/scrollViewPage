@@ -18,25 +18,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="DJR-bz-oVB" appends="YES" id="IOf-1T-btD"/>
-                            <outletCollection property="gestureRecognizers" destination="raa-gv-fLe" appends="YES" id="c3k-13-EDX"/>
-                        </connections>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="left" id="DJR-bz-oVB" userLabel="Left">
-                    <connections>
-                        <action selector="handleOfLeft:" destination="BYZ-38-t0r" id="loy-HR-yFW"/>
-                        <outlet property="delegate" destination="BYZ-38-t0r" id="jdE-Yt-tEH"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <swipeGestureRecognizer direction="right" id="raa-gv-fLe" userLabel="Right">
-                    <connections>
-                        <action selector="handleOfRight:" destination="BYZ-38-t0r" id="1uJ-vd-1vu"/>
-                        <outlet property="delegate" destination="BYZ-38-t0r" id="aR4-aL-ese"/>
-                    </connections>
-                </swipeGestureRecognizer>
             </objects>
         </scene>
     </scenes>
